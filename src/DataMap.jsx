@@ -1,95 +1,234 @@
-import d3 from 'd3';
-import topojson from 'topojson';
-import Datamap from 'datamaps/dist/datamaps.usa.min';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import statesDefaults from '../data/states-defaults';
-import objectAssign from 'object-assign';
+import Datamap from 'react-datamaps';
 
 export default class DataMap extends React.Component {
-  constructor(props){
-    super(props);
-    this.datamap = null;
-  }
-  linearPalleteScale(value){
-    const dataValues = this.props.regionData.map(function(data) { return data.value });
-    const minVal = Math.min(...dataValues);
-    const maxVal = Math.max(...dataValues);
-    return d3.scale.linear().domain([minVal, maxVal]).range(["#EFEFFF","#02386F"])(value);
-  }
-  redducedData(){
-    const newData = this.props.regionData.reduce((object, data) => {
-      object[data.code] = { value: data.value, fillColor: this.linearPalleteScale(data.value) };
-      return object;
-    }, {});
-    return objectAssign({}, statesDefaults, newData);
-  }
-  renderMap(){
-    return new Datamap({
-      element: ReactDOM.findDOMNode(this),
-      scope: 'usa',
-      data: this.redducedData(),
-      geographyConfig: {
-        borderWidth: 0.5,
-        highlightFillColor: '#FFCC80',
-        popupTemplate: function(geography, data) {
-          if (data && data.value) {
-            return '<div class="hoverinfo"><strong>' + geography.properties.name + ', ' + data.value + '</strong></div>';
-          } else {
-            return '<div class="hoverinfo"><strong>' + geography.properties.name + '</strong></div>';
-          }
-        }
-      }
-    });
-  }
-  currentScreenWidth(){
-    return window.innerWidth ||
-        document.documentElement.clientWidth ||
-        document.body.clientWidth;
-  }
-  componentDidMount(){
-    const mapContainer = d3.select('#datamap-container');
-    const initialScreenWidth = this.currentScreenWidth();
-    const containerWidth = (initialScreenWidth < 600) ?
-      { width: initialScreenWidth + 'px',  height: (initialScreenWidth * 0.5625) + 'px' } :
-      { width: '600px', height: '350px' }
 
-    mapContainer.style(containerWidth);
-    this.datamap = this.renderMap();
-    window.addEventListener('resize', () => {
-      const currentScreenWidth = this.currentScreenWidth();
-      const mapContainerWidth = mapContainer.style('width');
-      if (this.currentScreenWidth() > 600 && mapContainerWidth !== '600px') {
-        d3.select('svg').remove();
-        mapContainer.style({
-          width: '600px',
-          height: '350px'
-        });
-        this.datamap = this.renderMap();
-      }
-      else if (this.currentScreenWidth() <= 600) {
-        d3.select('svg').remove();
-        mapContainer.style({
-          width: currentScreenWidth + 'px',
-          height: (currentScreenWidth * 0.5625) + 'px'
-        });
-        this.datamap = this.renderMap();
-      }
-    });
-  }
-  componentDidUpdate(){
-    this.datamap.updateChoropleth(this.redducedData());
-  }
-  componentWillUnmount(){
-    d3.select('svg').remove();
-  }
-  render() {
-    return (
-      <div id="datamap-container"></div>
-    );
-  }
+    render() {
+        return (
+                <Datamap
+                    scope="usa"
+		    height="500"
+		    width="750"
+                    geographyConfig={{
+                        highlightBorderColor: '#bada55',
+                        popupTemplate: (geography, data) =>
+                            `<div class='hoverinfo'>${geography.properties.name}\nElectoral Votes: ${data.electoralVotes}`,
+                        highlightBorderWidth: 3
+                    }}
+                    fills={{
+                        'Republican': '#cc4731',
+                        'Democrat': '#306596',
+                        'Heavy Democrat': '#667faf',
+                        'Light Democrat': '#a9c0de',
+                        'Heavy Republican': '#ca5e5b',
+                        'Light Republican': '#eaa9a8',
+                        'defaultFill': '#eddc4e'
+                    }}
+                    data={{
+                        AZ: {
+                            fillKey: 'Republican',
+                            electoralVotes: 5
+                        },
+                        CO: {
+                            fillKey: 'Light Democrat',
+                            electoralVotes: 5
+                        },
+                        DE: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        FL: {
+                            fillKey: 'UNDECIDED',
+                            electoralVotes: 29
+                        },
+                        GA: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        HI: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        ID: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        IL: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        IN: {
+                            fillKey: 'Republican',
+                            electoralVotes: 11
+                        },
+                        IA: {
+                            fillKey: 'Light Democrat',
+                            electoralVotes: 11
+                        },
+                        KS: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        KY: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        LA: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        MD: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        ME: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        MA: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        MN: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        MI: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        MS: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        MO: {
+                            fillKey: 'Republican',
+                            electoralVotes: 13
+                        },
+                        MT: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        NC: {
+                            fillKey: 'Light Republican',
+                            electoralVotes: 32
+                        },
+                        NE: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        NV: {
+                            fillKey: 'Heavy Democrat',
+                            electoralVotes: 32
+                        },
+                        NH: {
+                            fillKey: 'Light Democrat',
+                            electoralVotes: 32
+                        },
+                        NJ: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        NY: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        ND: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        NM: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        OH: {
+                            fillKey: 'UNDECIDED',
+                            electoralVotes: 32
+                        },
+                        OK: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        OR: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        PA: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        RI: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        SC: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        SD: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        TN: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        TX: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        UT: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        WI: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        VA: {
+                            fillKey: 'Light Democrat',
+                            electoralVotes: 32
+                        },
+                        VT: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        WA: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        WV: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        WY: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        CA: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        CT: {
+                            fillKey: 'Democrat',
+                            electoralVotes: 32
+                        },
+                        AK: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        AR: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        },
+                        AL: {
+                            fillKey: 'Republican',
+                            electoralVotes: 32
+                        }
+                    }}
+                    labels
+                />
+        );
+    }
+
 }
-
-DataMap.propTypes = {
-    regionData: React.PropTypes.array.isRequired
-};
