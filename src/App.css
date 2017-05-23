@@ -56,6 +56,24 @@
     float: left;
 }
 
+.progress {
+  margin: 0 40px;
+}
+
+.fa-male {
+    position: relative;
+    top: 20px;
+    left: 24px;
+    font-size: 22px;
+}
+
+.fa-female {
+    position: relative;
+    font-size: 22px;
+    left: 621px;
+    top: -21px;
+}
+
 .hack-device:first-child {
   margin-left: 20%;
 }
