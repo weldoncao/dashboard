@@ -12,7 +12,7 @@ const data = [
       {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
 ];
 
-export default class SimpleBarChart extends Component {
+export default class HackBarChart extends Component {
 	render () {
   	return (
     	<BarChart width={600} height={300} data={data}
