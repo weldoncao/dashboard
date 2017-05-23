@@ -1,25 +1,81 @@
-.App {
-  text-align: center;
+.container-fluid {
+  background-color: #d1deea;
+  padding-bottom: 50px;
+  padding-top: 10px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.hack-card-left {
+    width: 40%;
+    float: left;
+    margin-left: 8%;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.card-title {
+    text-align: center;
+    color: #a29f9f;
 }
 
-.App-intro {
-  font-size: large;
+.card-text {
+    text-align: center;
+    color: #27a2ff;
+    font-size: 40px;
+}
+
+.hack-card-right {
+    width: 40%;
+    float: right;
+    margin-right: 8%;
 }
 
 .recharts-wrapper {
   display: inline;
+  background-color: #fff;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.hack-row {
+  clear: both;
+  position:relative;
+  top:20px;
+  background-color: #fff;
+  margin: auto 2%;
+  border-bottom: 1px solid #eee;
+}
+
+.hack-device {
+    text-align: center;
+    margin-top: 10%;
+    width: 20%;
+    font-size: 35px;
+    color: #27a2ff;
+    float: left;
+}
+
+.hack-device:first-child {
+  margin-left: 20%;
+}
+
+.hack-device:last-child {
+  margin-right: 20%;
+}
+
+.hack-device-ratio {
+  color: black;
+  font-size: 20px;
+}
+
+h5 {
+  width: 50%;
+}
+
+.hack-col {
+  margin-top: 20px;
+  width: 49%;
 }
 
 @keyframes App-logo-spin {
