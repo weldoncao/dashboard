@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.1",
-    "d3": "^4.9.1",
+    "d3": "^3.5.17",
     "datamaps": "^0.5.8",
     "object-assign": "^4.1.1",
     "react": "^15.5.4",
+    "react-bubble-chart": "^0.4.0",
     "react-datamaps": "^0.3.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
