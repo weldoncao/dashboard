@@ -2,21 +2,11 @@ import React, { Component } from 'react';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
-const _data = [
-    { name: 'Page A', value: 4000 },
-    { name: 'Page B', value: 3000 },
-    { name: 'Page C', value: 2000 },
-    { name: 'Page D', value: 2780 },
-    { name: 'Page E', value: 1890 },
-    { name: 'Page F', value: 2390 },
-    { name: 'Page G', value: 3490 },
-];
-
 export default class HackBarChart extends Component {
 	render () {
     let data = this.props.data || []
     data = data.map(item => {
-      return {name: item.name, value: parseInt(item.count)}
+      return {name: item.name, value: parseInt(item.count, 10)}
     })
   	return (
     	<BarChart width={600} height={300} data={data}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://os-172-17-154-107.ciatl1.turn.com:8443'
+const BASE_URL = 'http://172.16.208.197:8080'
 
 const axiosInstance = axios.create({
     baseURL: BASE_URL

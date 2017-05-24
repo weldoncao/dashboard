@@ -25,7 +25,7 @@ export default class HackPieChart extends Component {
 	render () {
     let data = this.props.data || _data
     data = data.map(item => {
-      return {name: item.name, value: parseInt(item.count)}
+      return {name: item.name, value: parseInt(item.count, 10)}
     })
   	return (
     	<PieChart width={600} height={250} onMouseEnter={this.onPieEnter}>

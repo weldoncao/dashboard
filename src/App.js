@@ -51,13 +51,13 @@ class App extends Component {
   }
 
   render() { 
-    const { age, occupation, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
-    const genderRatio = Array.isArray(gender) ? Math.round(Number(100*parseInt(gender[1].count)/(parseInt(gender[1].count) + parseInt(gender[0].count)))) : 50
-    const pcRatio = Array.isArray(devices) ? Math.round(Number(100*parseInt(devices[1].count)/(parseInt(devices[0].count) + parseInt(devices[1].count) + parseInt(devices[2].count)))) : 50
-    const mobileRatio = Array.isArray(devices) ? Math.round(Number(100*parseInt(devices[0].count)/(parseInt(devices[0].count) + parseInt(devices[1].count) + parseInt(devices[2].count)))) : 50
+    const { age, occupation, totalFires, fireCount, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
+    const genderRatio = Array.isArray(gender) && gender.length > 0 ? Math.round(Number(100*parseInt(gender[1].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
+    const pcRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
+    const mobileRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[0].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const otherRatio = 100 - pcRatio - mobileRatio
-    const dc = dcList || [{name: 't1', id: 12345}, {name: 't2', id: 2}]
-    const networth = networthList || [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
+    const dc = dcList || []
+    const networth = networthList || []
     return (
       <div className="container-fluid">
         <h4 className="page-header">
@@ -74,13 +74,13 @@ class App extends Component {
         <div className="card hack-card-left">
           <div className="card-block">
             <div className="card-title">User Activities</div>
-            <p className="card-text">1.26M</p>
+            <p className="card-text">{totalFires}</p>
           </div>
         </div>
         <div className="card hack-card-right">
           <div className="card-block">
-            <div className="card-title">Visits Per Hour</div>
-            <p className="card-text">554.14K</p>
+            <div className="card-title">Visits Per 15 Seconds</div>
+            <p className="card-text">{fireCount}</p>
           </div>
         </div>
         <div className="row placeholders hack-row">
@@ -107,7 +107,7 @@ class App extends Component {
                 <tbody>
                 {
                   networth.map((item, index) => {
-                    return <tr key={index} style={{textAlign: "center"}}><td>{item.name}</td><td>{item.value}</td></tr>
+                    return <tr key={index} style={{textAlign: "center"}}><td>{item.name}</td><td>{item.count}</td></tr>
                   })
                 }
               </tbody>
@@ -162,7 +162,7 @@ class App extends Component {
         </div>
 	<div className="row placeholders hack-row">
             <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
-	    <BubbleChart />
+	    <BubbleChart data={topCategories}/>
 	</div>
       </div>
     );
@@ -195,7 +195,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-     geo: sortCollection(state.data.geo, state.sortState),
+     geo: sortCollection(state.data.geographicData, state.sortState),
      age: state.data.age,
      gender: state.data.gender || {male: 1, female: 1},
      dcList: state.dcList,
@@ -205,7 +205,9 @@ function mapStateToProps(state) {
      networthList: state.data.netWorth,
      topCategories: state.data.topCategories,
      classifications: state.data.classifications,
-     browserType: state.data.browserType,
+     browserType: state.data.browserData,
+     totalFires: state.data.totalFires,
+     fireCount: state.data.fireCount,
      currentTime: state.time || new Date().toLocaleTimeString()
   }
 }
