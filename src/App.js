@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
 
+import { connect } from 'react-redux'
+
+import {
+    call,
+    callSuccess
+} from './dashboardAction'
+
 class App extends Component {
-  render() {
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(call(123)).payload.then(
+        result => {
+            dispatch(callSuccess(result.data))
+        }
+    )
+  }
+
+  render() { 
+    const { age } = this.props
     return (
       <div className="container-fluid">
         <h4 className="page-header">Market Name</h4>
@@ -26,7 +42,7 @@ class App extends Component {
         <h5 style={{marginLeft: 600, marginTop: 20}}>Demographics</h5>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Age</h5>
-            <HackBarChart />
+            <HackBarChart data={age}/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Occupation</h5>
@@ -42,6 +58,7 @@ class App extends Component {
             <h5 style={{marginLeft: 250}}>Networth</h5>
             <div>
               <table className="table">
+                <tbody>
                 <tr>
                   <td style={{textAlign: "center"}}>
                   0-1000
@@ -74,6 +91,7 @@ class App extends Component {
                   20%
                   </td>
                 </tr>
+              </tbody>
               </table>
             </div>
           </div>
@@ -138,4 +156,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        age: state.data.age
+    }
+}
+
+export default connect(mapStateToProps)(App)

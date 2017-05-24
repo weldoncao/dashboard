@@ -1,7 +1,7 @@
 .container-fluid {
-  background-color: #d1deea;
-  padding-bottom: 50px;
-  padding-top: 10px;
+    background-color: #d1deea;
+    padding-bottom: 50px;
+    padding-top: 10px;
 }
 
 .hack-card-left {
@@ -28,8 +28,8 @@
 }
 
 .recharts-wrapper {
-  display: inline;
-  background-color: #fff;
+    display: inline;
+    background-color: #fff;
 }
 
 .page-header {
@@ -39,12 +39,12 @@
 }
 
 .hack-row {
-  clear: both;
-  position:relative;
-  top:20px;
-  background-color: #fff;
-  margin: auto 2%;
-  border-bottom: 1px solid #eee;
+    clear: both;
+    position: relative;
+    top: 20px;
+    background-color: #fff;
+    margin: auto 2%;
+    border-bottom: 1px solid #eee;
 }
 
 .hack-device {
@@ -57,7 +57,7 @@
 }
 
 .progress {
-  margin: 0 40px;
+    margin: 0 40px;
 }
 
 .fa-male {
@@ -75,28 +75,32 @@
 }
 
 .hack-device:first-child {
-  margin-left: 20%;
+    margin-left: 20%;
 }
 
 .hack-device:last-child {
-  margin-right: 20%;
+    margin-right: 20%;
 }
 
 .hack-device-ratio {
-  color: black;
-  font-size: 20px;
+    color: black;
+    font-size: 20px;
 }
 
 h5 {
-  width: 50%;
+    width: 50%;
 }
 
 .hack-col {
-  margin-top: 20px;
-  width: 49%;
+    margin-top: 20px;
+    width: 49%;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
