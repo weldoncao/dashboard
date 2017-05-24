@@ -63,14 +63,14 @@
 .fa-male {
     position: relative;
     top: 20px;
-    left: 24px;
+    left: -46%;
     font-size: 22px;
 }
 
 .fa-female {
     position: relative;
     font-size: 22px;
-    left: 621px;
+    left: 95%;
     top: -21px;
 }
 
