@@ -17,7 +17,6 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  render() {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(call(123)).payload.then(
@@ -176,18 +175,9 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-    'regionData': sortCollection(state.regionData, state.sortState)
+    'regionData': sortCollection(state.regionData, state.sortState),
+     age: state.data.age
   }
 }
 
-<<<<<<< HEAD
-export default connect(mapStateToProps)(App);
-=======
-function mapStateToProps(state) {
-    return {
-        age: state.data.age
-    }
-}
-
 export default connect(mapStateToProps)(App)
->>>>>>> master
