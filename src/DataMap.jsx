@@ -3,10 +3,6 @@ import Datamap from 'react-datamaps';
 
 export default class DataMap extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }  
-
   render() {
         var counter = 0;
         var gradientCounter = 0;

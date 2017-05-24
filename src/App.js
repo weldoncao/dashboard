@@ -8,37 +8,53 @@ import DataMapTable from './DataMapTable';
 
 import {
     call,
-    callSuccess
+    callSuccess,
+    clock
 } from './dashboardAction'
 
+let contractId = 1
+let timer = void 0
+
+function pullData(dispatch, id) {
+    clearInterval(timer)
+    timer = setInterval(function() {
+      dispatch(call(id)).payload.then(
+          result => {
+              dispatch(callSuccess(result.data))
+          }
+      )
+
+    }, 15000);
+}
+
+function tick(dispatch) {
+    setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
+}
+
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
+  
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(call(123)).payload.then(
-        result => {
-            dispatch(callSuccess(result.data))
-        }
-    )
+      const { dispatch } = this.props
+      pullData(dispatch, contractId)
+      tick(dispatch)
   }
 
   render() { 
-    const { age } = this.props
+    const { age, currentTime, dispatch } = this.props
     const dc = [{name: 't1', id: 1}, {name: 't2', id: 2}]
     const networth = [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
       <div className="container-fluid">
         <h4 className="page-header">
           Market Name
-          <select style={{marginLeft: 20}}>
+          <select style={{marginLeft: 20}} onChange={ (e) => { pullData(dispatch, e.target.value)}}>
           {
             dc.map((item, index) => {
                 return <option key={index} value={item.id}>{item.name}</option>
             })
           }
           </select>
+          <span style={{float: "right"}}>Current Time: {currentTime}</span>
         </h4>
         <div className="card hack-card-left">
           <div className="card-block">
@@ -76,7 +92,7 @@ class App extends Component {
                 <tbody>
                 {
                   networth.map((item, index) => {
-                    return <tr style={{textAlign: "center"}}><td>{item.name}</td><td>{item.value}</td></tr>
+                    return <tr key={index} style={{textAlign: "center"}}><td>{item.name}</td><td>{item.value}</td></tr>
                   })
                 }
               </tbody>
@@ -157,10 +173,10 @@ function sortCollection(collection, sortState) {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     'regionData': sortCollection(state.regionData, state.sortState),
-     age: state.data.age
+     age: state.data.age,
+     currentTime: state.time || new Date().toLocaleTimeString()
   }
 }
 
