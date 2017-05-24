@@ -133,7 +133,7 @@ class App extends Component {
         </div>
 	<div className="row placeholders hack-row">
             <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
-	    <BubbleChart /> // should be passing in prop data here when its live
+	    <BubbleChart />
 	</div>
       </div>
     );
