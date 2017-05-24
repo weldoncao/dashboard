@@ -1,9 +1,40 @@
 import React from 'react';
+import axios from 'axios';
 import Datamap from 'react-datamaps';
 
 export default class DataMap extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
 
   render() {
+
+//    var temp;
+//    if (this.props) {
+//      temp = this.props.regionData  
+//    } else {
+//      temp = [];
+//    }
+//    console.log(this.props)
+//    var dataWithState = temp.map(x => {
+//      axios.get('https://www.zipcodeapi.com/rest/uWJPxib5467f0kaFKH42zyodvCJoh2KLZtBwLMCPTJ5U3gzOXDQxceLIQu67wQTv/info.json/' + x.name + '/degrees')
+//        .then(function (response) {
+//          x['state'] = response.state;
+//        })
+//        .catch(function (error) {
+//          console.log(error);
+//        });
+//    })
+//
+//    var groupBy = function(xs, key) {
+//      return xs.reduce(function(rv, x) {
+//        (rv[x[key]] = rv[x[key]] || []).push(x);
+//        return rv;
+//      }, {});
+//    };
+//
+//        var reducedData = groupBy(dataWithState, 'state');
         const geo = this.props.regionData || []
         var counter = 0;
         var gradientCounter = 0;

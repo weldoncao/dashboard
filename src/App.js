@@ -162,7 +162,6 @@ class App extends Component {
         </div>
 	<div className="row placeholders hack-row">
             <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
-	    <BubbleChart data={topCategories}/>
 	</div>
       </div>
     );
@@ -195,7 +194,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-     geo: sortCollection(state.data.geographicData, state.sortState),
+     geo: state.geoData,
      age: state.data.age,
      gender: state.data.gender || {male: 1, female: 1},
      dcList: state.dcList,

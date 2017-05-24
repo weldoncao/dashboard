@@ -107,34 +107,11 @@ export default class BubbleChart extends React.Component {
       states : [],
     }
   }
-  componentWillMount() {
-    var arrayZipCodes = [];
-    var dataWithState = this.props.data.map(x => {
-      axios.get('https://www.zipcodeapi.com/rest/uWJPxib5467f0kaFKH42zyodvCJoh2KLZtBwLMCPTJ5U3gzOXDQxceLIQu67wQTv/info.json/' + x.name + '/degrees')
-	.then(function (response) {
-          x['state'] = response.state;
-	})
-	.catch(function (error) {
-          console.log(error);
-	});
-    })
-
-    var groupBy = function(xs, key) {
-      return xs.reduce(function(rv, x) {
-        (rv[x[key]] = rv[x[key]] || []).push(x);
-        return rv;
-      }, {});
-    };
-    
-   var reducedData = groupBy(dataWithState, 'state');
-     
-   this.setState({
-     states: reducedData
-   })
-  }
   render () {
     // Instead of fake data, this should be props
-    var data = this.state.states.map((d, i) => ({ // fake
+    let tempData = this.props.data || [];
+
+    var data = tempData.map((d, i) => ({ // fake
       _id: i.toString(),
       value: d.count,
       colorValue: i,
