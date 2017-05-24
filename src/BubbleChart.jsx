@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactBubbleChart from 'react-bubble-chart';
-import '../node_modules/react-bubble-chart/src/style.css'
+import './style.css'
 import './App.css'
 
 var colorLegend = [
