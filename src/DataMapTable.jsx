@@ -20,7 +20,7 @@ export default class DataMapTable extends React.Component {
           {headers.map((x, index) => <th key={index}>{x}</th>)}
         </tr>
         <tbody>
-          {geo.sort(this.compare).slice(0,10).map((x, index) => <tr key={index}><td>{x.name}</td><td>{x.value}</td></tr>)}
+          {geo.sort(this.compare).slice(0,10).map((x, index) => <tr key={index}><td>{x.code}</td><td>{x.value}</td></tr>)}
         </tbody>
       </table>
     )
