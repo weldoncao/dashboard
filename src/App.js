@@ -53,8 +53,8 @@ class App extends Component {
   render() { 
     const { age, occupation, totalFires, fireCount, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
     const genderRatio = Array.isArray(gender) && gender.length > 0 ? Math.round(Number(100*parseInt(gender[1].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
-    const pcRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
-    const mobileRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[0].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
+    const pcRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[2].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
+    const mobileRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const otherRatio = 100 - pcRatio - mobileRatio
     const dc = dcList || []
     const networth = networthList || []
@@ -91,7 +91,7 @@ class App extends Component {
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Occupation</h5>
-            <HackBarChart data={occupation}/>
+            <HackBarChart data={occupation} color='#FFBB28'/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Gender</h5>
@@ -107,7 +107,7 @@ class App extends Component {
                 <tbody>
                 {
                   networth.map((item, index) => {
-                    return <tr key={index} style={{textAlign: "center"}}><td>{item.name}</td><td>{item.count}</td></tr>
+                    return <tr key={index} style={{textAlign: "center"}}><td>{item.name.replace('Networth_', '').replace('_', '~')}</td><td>{item.count}</td></tr>
                   })
                 }
               </tbody>
@@ -116,7 +116,7 @@ class App extends Component {
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Generation</h5>
-            <HackBarChart data={generation}/>
+            <HackBarChart data={generation} color='#FF8042'/>
           </div>
         </div>
         <div className="row placeholders hack-row">
@@ -153,11 +153,11 @@ class App extends Component {
           <h5 style={{marginLeft: 600, marginTop: 20}}>Magic</h5>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 230}}>Top Segments</h5>
-            <HackBarChart data={topCategories}/>
+            <HackBarChart data={topCategories} color='#8884d8'/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Realtime Classification</h5>
-            <HackBarChart data={classifications}/>
+            <HackBarChart data={classifications}  color='#00C49F'/>
           </div>
         </div>
 	<div className="row placeholders hack-row">

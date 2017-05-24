@@ -5,8 +5,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 export default class HackBarChart extends Component {
 	render () {
     let data = this.props.data || []
+    let color = this.props.color || '#0088FE'
     data = data.map(item => {
-      return {name: item.name, value: parseInt(item.count, 10)}
+      return {name: item.name.replace('Age_', '').replaceAll('_', '-'), value: parseInt(item.count, 10)}
     })
   	return (
     	<BarChart width={600} height={300} data={data}
@@ -15,7 +16,7 @@ export default class HackBarChart extends Component {
        <YAxis/>
        <CartesianGrid strokeDasharray="3 3"/>
        <Tooltip/>
-       <Bar dataKey="value" fill="#0088FE" isAnimationActive={false}/>
+       <Bar dataKey="value" fill={color} isAnimationActive={false}/>
       </BarChart>
     );
   }
