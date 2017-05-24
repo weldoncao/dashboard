@@ -53,9 +53,9 @@ class App extends Component {
 
   render() { 
     const { age, occupation, totalFires, fireCount, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
-    const genderRatio = Array.isArray(gender) && gender.length > 0 ? Math.round(Number(100*parseInt(gender[0].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
-    const pcRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[2].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
-    const mobileRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
+    const genderRatio = Array.isArray(gender) && gender.length === 2 ? Math.round(Number(100*parseInt(gender[0].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
+    const pcRatio = Array.isArray(devices) && gender.length === 3 ? Math.round(Number(100*parseInt(devices[2].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
+    const mobileRatio = Array.isArray(devices) && gender.length === 3 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const otherRatio = 100 - pcRatio - mobileRatio
     const dc = dcList || []
     const networth = networthList || []
@@ -153,7 +153,7 @@ class App extends Component {
         <div className="row placeholders hack-row">
           <h5 style={{marginLeft: 600, marginTop: 20}}>Magic</h5>
           <div className="col-xs-6 placeholder hack-col">
-            <h5 style={{marginLeft: 230}}>Top Segments</h5>
+            <h5 style={{marginLeft: 230}}>Top Categories</h5>
             <HackBarChart data={topCategories} color='#8884d8'/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
