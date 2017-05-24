@@ -23,9 +23,20 @@ class App extends Component {
 
   render() { 
     const { age } = this.props
+    const dc = [{name: 't1', id: 1}, {name: 't2', id: 2}]
+    const networth = [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
       <div className="container-fluid">
-        <h4 className="page-header">Market Name</h4>
+        <h4 className="page-header">
+          Market Name
+          <select style={{marginLeft: 20}}>
+          {
+            dc.map((item, index) => {
+                return <option key={index} value={item.id}>{item.name}</option>
+            })
+          }
+          </select>
+        </h4>
         <div className="card hack-card-left">
           <div className="card-block">
             <div className="card-title">User Activities</div>
@@ -50,6 +61,7 @@ class App extends Component {
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Gender</h5>
+            <h7 style={{marginLeft: 250}}>50% Male</h7>
             <i className="fa fa-male" aria-hidden="true"></i>
             <div className="progress">
               <div className="progress-bar bg-success" role="progressbar" style={{width: "50%"}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
@@ -59,38 +71,11 @@ class App extends Component {
             <div>
               <table className="table">
                 <tbody>
-                <tr>
-                  <td style={{textAlign: "center"}}>
-                  0-1000
-                  </td>
-                  <td>
-                  20%
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: "center"}}>
-                  0-1000
-                  </td>
-                  <td>
-                  20%
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: "center"}}>
-                  0-1000
-                  </td>
-                  <td>
-                  20%
-                  </td>
-                </tr>
-                <tr>
-                  <td style={{textAlign: "center"}}>
-                  0-1000
-                  </td>
-                  <td>
-                  20%
-                  </td>
-                </tr>
+                {
+                  networth.map((item, index) => {
+                    return <tr style={{textAlign: "center"}}><td>{item.name}</td><td>{item.value}</td></tr>
+                  })
+                }
               </tbody>
               </table>
             </div>
