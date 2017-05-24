@@ -6,8 +6,6 @@ import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
 import DataMapTable from './DataMapTable';
 
-import { connect } from 'react-redux'
-
 import {
     call,
     callSuccess
@@ -174,6 +172,7 @@ function sortCollection(collection, sortState) {
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return {
     'regionData': sortCollection(state.regionData, state.sortState),
      age: state.data.age

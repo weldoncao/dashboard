@@ -14,7 +14,8 @@ const loggerMiddleware = createLogger()
 
 const initialStates = {
   regionData: statesData,
-  sortState: { key: 'regionName', direction: 'ASC' }
+  sortState: { key: 'regionName', direction: 'ASC' },
+  data: {}
 }
 
 const store = createStore(
