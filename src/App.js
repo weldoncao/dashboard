@@ -19,16 +19,14 @@ let contractId = 12345
 let timer = void 0
 
 function pullData(dispatch, id) {
-    //clearInterval(timer)
-    //timer = setInterval(function() {
-      
-    const payload = dispatch(call(id)).payload
-    payload.then(function(result) {
-            dispatch(callSuccess(result.data))
-    }).catch(function(result) {
-      console.log(result)
-    })
-    //}, 5000);
+    clearInterval(timer)
+    timer = setInterval(function() {
+      dispatch(call(id)).payload.then(function(result) {
+              dispatch(callSuccess(result.data))
+      }).catch(function(result) {
+        console.log(result)
+      })
+    }, 5000);
 }
 
 function pullDataContracts(dispatch) {
@@ -40,7 +38,7 @@ function pullDataContracts(dispatch) {
 }
 
 function tick(dispatch) {
-    //setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
+    setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
 }
 
 class App extends Component {
@@ -53,7 +51,11 @@ class App extends Component {
   }
 
   render() { 
-    const { age, currentTime, dispatch, dcList, networthList, geo } = this.props
+    const { age, occupation, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
+    const genderRatio = Array.isArray(gender) ? Math.round(Number(100*parseInt(gender[1].count)/(parseInt(gender[1].count) + parseInt(gender[0].count)))) : 50
+    const pcRatio = Array.isArray(devices) ? Math.round(Number(100*parseInt(devices[1].count)/(parseInt(devices[0].count) + parseInt(devices[1].count) + parseInt(devices[2].count)))) : 50
+    const mobileRatio = Array.isArray(devices) ? Math.round(Number(100*parseInt(devices[0].count)/(parseInt(devices[0].count) + parseInt(devices[1].count) + parseInt(devices[2].count)))) : 50
+    const otherRatio = 100 - pcRatio - mobileRatio
     const dc = dcList || [{name: 't1', id: 12345}, {name: 't2', id: 2}]
     const networth = networthList || [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
@@ -89,14 +91,14 @@ class App extends Component {
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Occupation</h5>
-            <HackBarChart />
+            <HackBarChart data={occupation}/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Gender</h5>
-            <h7 style={{marginLeft: 250}}>50% Male</h7>
+            <h7 style={{marginLeft: 250}}>{genderRatio}% Male</h7>
             <i className="fa fa-male" aria-hidden="true"></i>
             <div className="progress">
-              <div className="progress-bar bg-success" role="progressbar" style={{width: "50%"}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+              <div className="progress-bar bg-success" role="progressbar" style={{width: genderRatio + "%"}} aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <i className="fa fa-female" aria-hidden="true"></i>
             <h5 style={{marginLeft: 250}}>Networth</h5>
@@ -114,27 +116,27 @@ class App extends Component {
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Generation</h5>
-            <HackBarChart />
+            <HackBarChart data={generation}/>
           </div>
         </div>
         <div className="row placeholders hack-row">
           <h5 style={{marginLeft: 600, marginTop: 20}}>Technographics</h5>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 230}}>Browser Share</h5>
-            <HackPieChart />
+            <HackPieChart data={browserType}/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 290}}>Devices</h5>
             <div>
               <div className="hack-device">
                 <div><i className="fa fa-desktop" aria-hidden="true"></i></div>
-                <div className="hack-device-ratio">85%</div>
+                <div className="hack-device-ratio">{pcRatio}%</div>
               </div>
               <div className="hack-device">
                 <div><i className="fa fa-mobile" aria-hidden="true"></i></div>
-                <div className="hack-device-ratio">10%</div>
+                <div className="hack-device-ratio">{mobileRatio}%</div>
               </div>
-              <div className="hack-device"><div style={{fontSize: 20, paddingTop: 12, paddingBottom: 13}}>Other</div><div className="hack-device-ratio">5%</div></div>
+              <div className="hack-device"><div style={{fontSize: 20, paddingTop: 12, paddingBottom: 13}}>Other</div><div className="hack-device-ratio">{otherRatio}%</div></div>
             </div>
           </div>
         </div>
@@ -151,11 +153,11 @@ class App extends Component {
           <h5 style={{marginLeft: 600, marginTop: 20}}>Magic</h5>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 230}}>Top Segments</h5>
-            <HackBarChart />
+            <HackBarChart data={topCategories}/>
           </div>
           <div className="col-xs-6 placeholder hack-col">
             <h5 style={{marginLeft: 250}}>Realtime Classification</h5>
-            <HackBarChart />
+            <HackBarChart data={classifications}/>
           </div>
         </div>
 	<div className="row placeholders hack-row">
@@ -195,9 +197,15 @@ function mapStateToProps(state) {
   return {
      geo: sortCollection(state.data.geo, state.sortState),
      age: state.data.age,
-     gender: state.data.gender,
+     gender: state.data.gender || {male: 1, female: 1},
      dcList: state.dcList,
-     networthList: state.data.networth,
+     occupation: state.data.occupation,
+     generation: state.data.generation,
+     devices: state.data.devices,
+     networthList: state.data.netWorth,
+     topCategories: state.data.topCategories,
+     classifications: state.data.classifications,
+     browserType: state.data.browserType,
      currentTime: state.time || new Date().toLocaleTimeString()
   }
 }

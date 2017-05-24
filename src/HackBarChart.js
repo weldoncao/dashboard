@@ -14,7 +14,10 @@ const _data = [
 
 export default class HackBarChart extends Component {
 	render () {
-    const data = this.props.data || _data
+    let data = this.props.data || []
+    data = data.map(item => {
+      return {name: item.name, value: parseInt(item.count)}
+    })
   	return (
     	<BarChart width={600} height={300} data={data}
             margin={{top: 5, right: 30, left: 20, bottom: 5}}>
@@ -22,7 +25,7 @@ export default class HackBarChart extends Component {
        <YAxis/>
        <CartesianGrid strokeDasharray="3 3"/>
        <Tooltip/>
-       <Bar dataKey="value" fill="#0088FE" />
+       <Bar dataKey="value" fill="#0088FE" isAnimationActive={false}/>
       </BarChart>
     );
   }
