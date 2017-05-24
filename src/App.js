@@ -5,7 +5,7 @@ import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
 import DataMapTable from './DataMapTable';
-//import BubbleChart from './BubbleChart';
+import BubbleChart from './BubbleChart';
 
 import {
     call,
@@ -162,6 +162,7 @@ class App extends Component {
         </div>
 	<div className="row placeholders hack-row">
             <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
+ 	    <BubbleChart data={topCategories} />
 	</div>
       </div>
     );
