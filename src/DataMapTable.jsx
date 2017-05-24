@@ -13,13 +13,14 @@ export default class DataMapTable extends React.Component {
   
   render() {
     const headers = ['State', 'Users'] 
+    const geo = this.props.regionData || []
     return (
       <table className="table table-condensed">
         <tr>
           {headers.map((x, index) => <th key={index}>{x}</th>)}
         </tr>
         <tbody>
-          {this.props.regionData.sort(this.compare).slice(0,10).map((x, index) => <tr key={index}><td>{x.regionName}</td><td>{x.value}</td></tr>)}
+          {geo.sort(this.compare).slice(0,10).map((x, index) => <tr key={index}><td>{x.regionName}</td><td>{x.value}</td></tr>)}
         </tbody>
       </table>
     )

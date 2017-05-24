@@ -21,6 +21,7 @@ export function call(id) {
 }
 
 export function callSuccess(data) {
+    debugger
     return {
         type: CALL_SUCCESS,
         data: data

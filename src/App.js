@@ -6,7 +6,6 @@ import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
 import DataMapTable from './DataMapTable';
 import BubbleChart from './BubbleChart';
-import '../node_modules/react-bubble-chart/src/style.css'
 
 import {
     call,
@@ -20,15 +19,16 @@ let contractId = 12345
 let timer = void 0
 
 function pullData(dispatch, id) {
-    clearInterval(timer)
-    timer = setInterval(function() {
-      dispatch(call(id)).payload.then(
-          result => {
-              dispatch(callSuccess(result.data))
-          }
-      )
-
-    }, 15000);
+    //clearInterval(timer)
+    //timer = setInterval(function() {
+      
+    const payload = dispatch(call(id)).payload
+    payload.then(function(result) {
+            dispatch(callSuccess(result.data))
+    }).catch(function(result) {
+      console.log(result)
+    })
+    //}, 5000);
 }
 
 function pullDataContracts(dispatch) {
@@ -40,7 +40,7 @@ function pullDataContracts(dispatch) {
 }
 
 function tick(dispatch) {
-    setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
+    //setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
 }
 
 class App extends Component {
@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   render() { 
-    const { age, currentTime, dispatch, dcList, networthList } = this.props
+    const { age, currentTime, dispatch, dcList, networthList, geo } = this.props
     const dc = dcList || [{name: 't1', id: 12345}, {name: 't2', id: 2}]
     const networth = networthList || [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
@@ -141,10 +141,10 @@ class App extends Component {
         <div className="row placeholders hack-row">
           <h5 style={{marginLeft: 600, marginTop: 20}}>Geographics</h5>
           <div className="col-xs-6 placeholder hack-col">
-	    <DataMap regionData={this.props.regionData} />
+	    <DataMap regionData={geo} />
           </div>
           <div className="col-xs-6 placeholder hack-col">
-            <DataMapTable regionData={this.props.regionData} />
+            <DataMapTable regionData={geo} />
           </div>
         </div>
         <div className="row placeholders hack-row">
@@ -193,7 +193,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-     regionData: sortCollection(state.data.regionData, state.sortState) || {},
+     geo: sortCollection(state.data.geo, state.sortState),
      age: state.data.age,
      gender: state.data.gender,
      dcList: state.dcList,

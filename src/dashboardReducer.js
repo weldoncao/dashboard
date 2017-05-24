@@ -18,6 +18,7 @@ export default function dashboard(state = initialStates, action) {
         case CALL:
             return {...state, fetching: true }
         case CALL_SUCCESS:
+        debugger
             return {...state, data: action.data, fetching: false }
         case PULL_DCS:
             return {...state, fetching: true }
