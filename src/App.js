@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux'
-import SimpleBarChart from './BarChart';
-import GeographicContainer from './GeographicContainer'
 import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
@@ -98,7 +96,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-    regionData: sortCollection(state.regionData, state.sortState),
+    'regionData': sortCollection(state.regionData, state.sortState)
   }
 }
 

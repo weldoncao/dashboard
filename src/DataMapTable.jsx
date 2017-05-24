@@ -8,7 +8,7 @@ export default class DataMapTable extends React.Component {
   render() {
     const headers = ['State', 'Value'] // value placeholder
     return (
-      <table>
+      <table class="table">
         <tr>
           {headers.map(x => <th>{x}</th>)}
         </tr>

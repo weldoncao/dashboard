@@ -8,7 +8,7 @@ export default class DataMap extends React.Component {
                 <Datamap
                     scope="usa"
 		    height="500"
-		    width="750"
+		    width="650"
                     geographyConfig={{
                         highlightBorderColor: '#bada55',
                         popupTemplate: (geography, data) =>
