@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactBubbleChart from 'react-bubble-chart';
+import axios from 'axios';
 import './style.css'
 import './App.css'
 
@@ -29,28 +30,28 @@ var fakedata = [
   {
     _id: '1',
     value: 800,
-    displayTest: 'Fake thing #1',
+    displayText: 'Fake thing #1',
     colorValue: 0,
     selected:false
   },
   {
     _id: '2',
     value: 400,
-    displayTest: 'Fake thing #2',
+    displayText: 'Fake thing #2',
     colorValue: 1,
     selected:false
   },
   {
     _id: '3',
     value: 100,
-    displayTest: 'Fake thing #3',
+    displayText: 'Fake thing #3',
     colorValue: 2,
     selected:false
   },
   {
     _id: '4',
     value: 1000,
-    displayTest: 'Fake thing #4',
+    displayText: 'Fake thing #4',
     colorValue: 3,
     selected:false
   },
@@ -99,13 +100,46 @@ var fakedata = [
 ];
 
 export default class BubbleChart extends React.Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      states : [],
+    }
+  }
+  componentWillMount() {
+    var arrayZipCodes = [];
+    var dataWithState = this.props.data.map(x => {
+      axios.get('https://www.zipcodeapi.com/rest/uWJPxib5467f0kaFKH42zyodvCJoh2KLZtBwLMCPTJ5U3gzOXDQxceLIQu67wQTv/info.json/' + x.name + '/degrees')
+	.then(function (response) {
+          x['state'] = response.state;
+	})
+	.catch(function (error) {
+          console.log(error);
+	});
+    })
+
+    var groupBy = function(xs, key) {
+      return xs.reduce(function(rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {});
+    };
+    
+   var reducedData = groupBy(dataWithState, 'state');
+     
+   this.setState({
+     states: reducedData
+   })
+  }
   render () {
-    var data = fakedata.map(d => ({ // fake
-      _id: d._id,
-      value: d.value,
-      colorValue: d.colorValue,
-      selected: d.selected,
-      displayText: d.displayText
+    // Instead of fake data, this should be props
+    var data = this.state.states.map((d, i) => ({ // fake
+      _id: i.toString(),
+      value: d.count,
+      colorValue: i,
+      selected: false,
+      displayText: d.name
     }));
 
     return <ReactBubbleChart
