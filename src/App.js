@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import { connect } from 'react-redux'
 import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
-
-import { connect } from 'react-redux'
+import DataMap from './DataMap';
+import DataMapTable from './DataMapTable';
 
 import {
     call,
@@ -12,6 +12,9 @@ import {
 } from './dashboardAction'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(call(123)).payload.then(
@@ -109,20 +112,10 @@ class App extends Component {
         <div className="row placeholders hack-row">
           <h5 style={{marginLeft: 600, marginTop: 20}}>Geographics</h5>
           <div className="col-xs-6 placeholder hack-col">
-            <HackPieChart />
+	    <DataMap regionData={this.props.regionData} />
           </div>
           <div className="col-xs-6 placeholder hack-col">
-            <div>
-              <div className="hack-device">
-                <div><i className="fa fa-desktop" aria-hidden="true"></i></div>
-                <div className="hack-device-ratio">85%</div>
-              </div>
-              <div className="hack-device">
-                <div><i className="fa fa-mobile" aria-hidden="true"></i></div>
-                <div className="hack-device-ratio">10%</div>
-              </div>
-              <div className="hack-device"><div style={{fontSize: 20, paddingTop: 12, paddingBottom: 13}}>Other</div><div className="hack-device-ratio">5%</div></div>
-            </div>
+            <DataMapTable regionData={this.props.regionData} />
           </div>
         </div>
         <div className="row placeholders hack-row">
@@ -139,12 +132,36 @@ class App extends Component {
       </div>
     );
   }
+
+}
+
+function sortCollection(collection, sortState) {
+  switch (sortState.direction) {
+    case 'ASC':
+      return collection.sort(function(a, b) {
+	if (a[sortState.key] > b[sortState.key]) return 1;
+	if (a[sortState.key] < b[sortState.key]) return -1;
+	return 0;
+      });
+
+    case 'DESC':
+      return collection.sort(function(a, b) {
+	if (a[sortState.key] > b[sortState.key]) return -1;
+	if (a[sortState.key] < b[sortState.key]) return 1;
+	return 0;
+      });
+
+    default:
+      return collection;
+  }
 }
 
 function mapStateToProps(state) {
-    return {
-        age: state.data.age
-    }
+  console.log(state)
+  return {
+    'regionData': sortCollection(state.regionData, state.sortState),
+     age: state.data.age
+  }
 }
 
 export default connect(mapStateToProps)(App)

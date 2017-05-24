@@ -8,11 +8,19 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import dashboardReducer from './dashboardReducer'
+import statesData from './data/states-data';
 
 const loggerMiddleware = createLogger()
 
+const initialStates = {
+  regionData: statesData,
+  sortState: { key: 'regionName', direction: 'ASC' },
+  data: {}
+}
+
 const store = createStore(
     dashboardReducer,
+    initialStates,
     applyMiddleware(
         thunkMiddleware,
         loggerMiddleware
