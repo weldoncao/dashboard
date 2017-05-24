@@ -7,7 +7,7 @@ export default class HackBarChart extends Component {
     let data = this.props.data || []
     let color = this.props.color || '#0088FE'
     data = data.map(item => {
-      return {name: item.name.replace('Age_', '').replaceAll('_', '-'), value: parseInt(item.count, 10)}
+      return {name: item.name.replace('Age_', '').replace('_', '-').replace('_', '-').replace('_', '-'), value: parseInt(item.count, 10)}
     })
   	return (
     	<BarChart width={600} height={300} data={data}

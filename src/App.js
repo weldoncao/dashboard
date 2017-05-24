@@ -5,7 +5,7 @@ import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
 import DataMapTable from './DataMapTable';
-import BubbleChart from './BubbleChart';
+//import BubbleChart from './BubbleChart';
 
 import {
     call,
@@ -52,7 +52,7 @@ class App extends Component {
 
   render() { 
     const { age, occupation, totalFires, fireCount, browserType, classifications, generation, devices, gender, currentTime, dispatch, dcList, networthList, geo, topCategories } = this.props
-    const genderRatio = Array.isArray(gender) && gender.length > 0 ? Math.round(Number(100*parseInt(gender[1].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
+    const genderRatio = Array.isArray(gender) && gender.length > 0 ? Math.round(Number(100*parseInt(gender[0].count, 10)/(parseInt(gender[1].count, 10) + parseInt(gender[0].count, 10)))) : 50
     const pcRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[2].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const mobileRatio = Array.isArray(devices) && gender.length > 0 ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const otherRatio = 100 - pcRatio - mobileRatio
@@ -162,7 +162,6 @@ class App extends Component {
         </div>
 	<div className="row placeholders hack-row">
             <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
-	    <BubbleChart data={topCategories}/>
 	</div>
       </div>
     );
@@ -206,8 +205,8 @@ function mapStateToProps(state) {
      topCategories: state.data.topCategories,
      classifications: state.data.classifications,
      browserType: state.data.browserData,
-     totalFires: state.data.totalFires,
-     fireCount: state.data.fireCount,
+     totalFires: state.data.totalFires ? state.data.totalFires[0].count : 0,
+     fireCount: state.data.fireCount ? state.data.totalFires[0].count : 0,
      currentTime: state.time || new Date().toLocaleTimeString()
   }
 }

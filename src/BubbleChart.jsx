@@ -100,7 +100,8 @@ var fakedata = [
 
 export default class BubbleChart extends React.Component {
   render () {
-    var data = fakedata.map(d => ({ // fake
+    var temp = this.props.data || [{name:'test', count: 123}];
+    var data = temp.map(d => ({ // fake
       _id: d._id,
       value: d.value,
       colorValue: d.colorValue,
