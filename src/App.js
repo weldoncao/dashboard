@@ -5,6 +5,8 @@ import HackBarChart from './HackBarChart';
 import HackPieChart from './HackPieChart';
 import DataMap from './DataMap';
 import DataMapTable from './DataMapTable';
+import BubbleChart from './BubbleChart';
+import '../node_modules/react-bubble-chart/src/style.css'
 
 import {
     call,
@@ -129,6 +131,10 @@ class App extends Component {
             <HackBarChart />
           </div>
         </div>
+	<div className="row placeholders hack-row">
+            <h5 style={{marginLeft: 600, marginTop: 20}}>Segments</h5>
+	    <BubbleChart />
+	</div>
       </div>
     );
   }
