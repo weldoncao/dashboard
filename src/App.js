@@ -169,29 +169,31 @@ class App extends Component {
 }
 
 function sortCollection(collection, sortState) {
-  switch (sortState.direction) {
-    case 'ASC':
-      return collection.sort(function(a, b) {
-	if (a[sortState.key] > b[sortState.key]) return 1;
-	if (a[sortState.key] < b[sortState.key]) return -1;
-	return 0;
-      });
+  if(collection) {
+    switch (sortState.direction) {
+      case 'ASC':
+        return collection.sort(function(a, b) {
+  	if (a[sortState.key] > b[sortState.key]) return 1;
+  	if (a[sortState.key] < b[sortState.key]) return -1;
+  	return 0;
+        });
 
-    case 'DESC':
-      return collection.sort(function(a, b) {
-	if (a[sortState.key] > b[sortState.key]) return -1;
-	if (a[sortState.key] < b[sortState.key]) return 1;
-	return 0;
-      });
+      case 'DESC':
+        return collection.sort(function(a, b) {
+  	if (a[sortState.key] > b[sortState.key]) return -1;
+  	if (a[sortState.key] < b[sortState.key]) return 1;
+  	return 0;
+        });
 
-    default:
-      return collection;
+      default:
+        return collection;
+    }
   }
 }
 
 function mapStateToProps(state) {
   return {
-     regionData: sortCollection(state.data.regionData, state.sortState),
+     regionData: sortCollection(state.data.regionData, state.sortState) || {},
      age: state.data.age,
      gender: state.data.gender,
      dcList: state.dcList,

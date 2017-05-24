@@ -6,7 +6,14 @@ import {
     PULL_DCS_SUCCESS
 } from './dashboardAction'
 
-export default function dashboard(state = { data: {} }, action) {
+import statesData from './data/states-data';
+
+const initialStates = {
+  sortState: { key: 'regionName', direction: 'ASC' },
+  data: {regionData: statesData}
+}
+
+export default function dashboard(state = initialStates, action) {
     switch (action.type) {
         case CALL:
             return {...state, fetching: true }
