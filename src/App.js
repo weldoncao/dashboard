@@ -9,7 +9,9 @@ import DataMapTable from './DataMapTable';
 import {
     call,
     callSuccess,
-    clock
+    clock,
+    pulldcs,
+    pulldcsSuccess
 } from './dashboardAction'
 
 let contractId = 12345
@@ -27,8 +29,16 @@ function pullData(dispatch, id) {
     }, 15000);
 }
 
+function pullDataContracts(dispatch) {
+  dispatch(pulldcs()).payload.then(
+      result => {
+        dispatch(pulldcsSuccess(result.data))
+      }
+    )
+}
+
 function tick(dispatch) {
-    //setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
+    setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
 }
 
 class App extends Component {
@@ -37,12 +47,13 @@ class App extends Component {
       const { dispatch } = this.props
       pullData(dispatch, contractId)
       tick(dispatch)
+      pullDataContracts(dispatch)
   }
 
   render() { 
-    const { age, currentTime, dispatch } = this.props
-    const dc = [{name: 't1', id: 12345}, {name: 't2', id: 2}]
-    const networth = [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
+    const { age, currentTime, dispatch, dcList, networthList } = this.props
+    const dc = dcList || [{name: 't1', id: 12345}, {name: 't2', id: 2}]
+    const networth = networthList || [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
       <div className="container-fluid">
         <h4 className="page-header">
@@ -177,6 +188,8 @@ function mapStateToProps(state) {
      regionData: sortCollection(state.data.regionData, state.sortState),
      age: state.data.age,
      gender: state.data.gender,
+     dcList: state.dcList,
+     networthList: state.data.networth,
      currentTime: state.time || new Date().toLocaleTimeString()
   }
 }
