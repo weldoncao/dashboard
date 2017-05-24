@@ -7,6 +7,7 @@ import {
 } from './dashboardAction'
 
 import statesData from './data/states-data';
+import axios from 'axios';
 
 const initialStates = {
   sortState: { key: 'regionName', direction: 'ASC' },
@@ -18,7 +19,7 @@ export default function dashboard(state = initialStates, action) {
         case CALL:
             return {...state, fetching: true }
         case CALL_SUCCESS:
-            return {...state, data: action.data, fetching: false }
+            return {...state, data: action.data, fetching: false , geoData: statesData }
         case PULL_DCS:
             return {...state, fetching: true }
         case PULL_DCS_SUCCESS:

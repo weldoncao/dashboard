@@ -14,6 +14,7 @@ export default class DataMap extends React.Component {
           return x;
         }, {})
     
+        console.log(this.props.regionData)
         var data = geo.reduce((x, y) => {
           x[y.code] = {'value': y.value, 'fillKey': counter};
           counter++;

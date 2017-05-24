@@ -196,7 +196,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-     geo: sortCollection(state.data.geographicData, state.sortState),
+     geo: sortCollection(state.geoData, state.sortState),
      age: state.data.age,
      gender: state.data.gender || {male: 1, female: 1},
      dcList: state.dcList,
