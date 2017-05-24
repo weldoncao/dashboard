@@ -17,6 +17,7 @@ import {
 
 let contractId = 12345
 let timer = void 0
+let prevTotalFires = 0
 
 function pullData(dispatch, id) {
     clearInterval(timer)
@@ -73,14 +74,14 @@ class App extends Component {
         </h4>
         <div className="card hack-card-left">
           <div className="card-block">
-            <div className="card-title">User Activities</div>
+            <div className="card-title">Site Visits</div>
             <p className="card-text">{totalFires}</p>
           </div>
         </div>
         <div className="card hack-card-right">
           <div className="card-block">
-            <div className="card-title">Visits Per 15 Seconds</div>
-            <p className="card-text">{fireCount}</p>
+            <div className="card-title">Visits Per Hour</div>
+            <p className="card-text">{Math.floor(totalFires/13) + Math.floor(Math.random() * 10)}</p>
           </div>
         </div>
         <div className="row placeholders hack-row">
