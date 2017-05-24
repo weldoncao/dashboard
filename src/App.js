@@ -12,7 +12,7 @@ import {
     clock
 } from './dashboardAction'
 
-let contractId = 1
+let contractId = 12345
 let timer = void 0
 
 function pullData(dispatch, id) {
@@ -28,7 +28,7 @@ function pullData(dispatch, id) {
 }
 
 function tick(dispatch) {
-    setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
+    //setInterval(function() {dispatch(clock(new Date().toLocaleTimeString()))}, 1000);
 }
 
 class App extends Component {
@@ -41,7 +41,7 @@ class App extends Component {
 
   render() { 
     const { age, currentTime, dispatch } = this.props
-    const dc = [{name: 't1', id: 1}, {name: 't2', id: 2}]
+    const dc = [{name: 't1', id: 12345}, {name: 't2', id: 2}]
     const networth = [{name:'0-100', value: '20%'}, {name:'100-500', value: '40%'}]
     return (
       <div className="container-fluid">
@@ -174,8 +174,9 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-    'regionData': sortCollection(state.regionData, state.sortState),
+     regionData: sortCollection(state.data.regionData, state.sortState),
      age: state.data.age,
+     gender: state.data.gender,
      currentTime: state.time || new Date().toLocaleTimeString()
   }
 }

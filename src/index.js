@@ -13,9 +13,8 @@ import statesData from './data/states-data';
 const loggerMiddleware = createLogger()
 
 const initialStates = {
-  regionData: statesData,
   sortState: { key: 'regionName', direction: 'ASC' },
-  data: {}
+  data: {regionData: statesData}
 }
 
 const store = createStore(

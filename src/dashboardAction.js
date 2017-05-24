@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
     baseURL: BASE_URL
 })
 
-function get(path, id) {
+function get(id) {
     return axiosInstance.get('/jax/hack/getData?dataContract=' + id);
 }
 
