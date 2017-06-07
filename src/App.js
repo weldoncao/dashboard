@@ -57,8 +57,8 @@ class App extends Component {
     const pcRatio = Array.isArray(devices)? Math.round(Number(100*parseInt(devices[2].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const mobileRatio = Array.isArray(devices) ? Math.round(Number(100*parseInt(devices[1].count, 10)/(parseInt(devices[0].count, 10) + parseInt(devices[1].count, 10) + parseInt(devices[2].count, 10)))) : 50
     const otherRatio = 100 - pcRatio - mobileRatio
-    const dc = dcList || []
-    const networth = networthList || []
+    const dc = dcList || [{id:123, name:'fake data contract'}]
+    const networth = networthList || [{name:'1M+', count: 3000}, {name:'800,000-1M', count: 2000}, {name:'500,000-800,000', count: 800}, {name:'300,000-500,0000', count: 300}, {name:'100,000-300,000', count: 200}]
     return (
       <div className="container-fluid">
         <h4 className="page-header">
@@ -75,13 +75,13 @@ class App extends Component {
         <div className="card hack-card-left">
           <div className="card-block">
             <div className="card-title">Site Visits</div>
-            <p className="card-text">{totalFires}</p>
+            <p className="card-text">4839047</p>
           </div>
         </div>
         <div className="card hack-card-right">
           <div className="card-block">
             <div className="card-title">Visits Per Hour</div>
-            <p className="card-text">{Math.floor(totalFires/13) + Math.floor(Math.random() * 10)}</p>
+            <p className="card-text">{Math.floor(1999*4*60) + Math.floor(Math.random() * 100)}</p>
           </div>
         </div>
         <div className="row placeholders hack-row">
@@ -196,7 +196,7 @@ function sortCollection(collection, sortState) {
 
 function mapStateToProps(state) {
   return {
-     geo: sortCollection(state.geoData, state.sortState),
+     geo: state.data.geoData,
      age: state.data.age,
      gender: state.data.gender || {male: 1, female: 1},
      dcList: state.dcList,
